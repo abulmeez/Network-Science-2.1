@@ -65,14 +65,48 @@ def apply_spectral_clustering(graph, n_clusters):
     labels = spectral.fit_predict(adj_matrix)
     return {node: labels[i] for i, node in enumerate(graph.nodes())}
 
+def calculate_conductance(graph, community):
+    """
+    Calculate conductance for a single community.
+    Conductance is the ratio of external edges to total edges (internal + external).
+    """
+    internal_edges = 0
+    external_edges = 0
+    
+    for node in community:
+        for neighbor in graph.neighbors(node):
+            if neighbor in community:
+                internal_edges += 1
+            else:
+                external_edges += 1
+    
+    # Divide by 2 since we counted each internal edge twice
+    internal_edges = internal_edges / 2
+    
+    # If there are no edges at all, return 1 (worst conductance)
+    if internal_edges + external_edges == 0:
+        return 1.0
+        
+    return external_edges / (2 * internal_edges + external_edges)
+
 def evaluate_topology(graph, communities):
     """
-    Evaluate the topology of the graph using modularity.
+    Evaluate the topology of the graph using modularity and conductance.
     
     The communities should be provided as a list of lists of nodes.
+    Returns a dictionary with modularity and average conductance scores.
     """
+    # Calculate modularity
     modularity = nx.algorithms.community.modularity(graph, communities)
-    return {"modularity": modularity}
+    
+    # Calculate conductance for each community and average
+    conductances = [calculate_conductance(graph, community) for community in communities]
+    avg_conductance = np.mean(conductances)
+    
+    return {
+        "modularity": modularity,
+        "conductance": avg_conductance
+    }
 
 def evaluate_label_dependent(true_labels, predicted_labels):
     """
@@ -170,11 +204,13 @@ if __name__ == "__main__":
             print("\nResults:")
             print("\nLouvain Method:")
             print(f"Modularity: {louvain_topology['modularity']:.3f}")
+            print(f"Conductance: {louvain_topology['conductance']:.3f}")
             print(f"NMI: {louvain_label_metrics['NMI']:.3f}")
             print(f"ARI: {louvain_label_metrics['ARI']:.3f}")
             
             print("\nSpectral Clustering:")
             print(f"Modularity: {spectral_topology['modularity']:.3f}")
+            print(f"Conductance: {spectral_topology['conductance']:.3f}")
             print(f"NMI: {spectral_label_metrics['NMI']:.3f}")
             print(f"ARI: {spectral_label_metrics['ARI']:.3f}")
             

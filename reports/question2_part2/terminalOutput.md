@@ -1,3 +1,4 @@
+
 .venvsaifalami@saifs-MacBook-Pro Network-Science-2.1 % python3 src/question2_part2.py
 
 ==================================================
@@ -18,12 +19,14 @@ Evaluating topology metrics...
 Results:
 
 Louvain Method:
-Modularity: 0.814
-NMI: 0.580
-ARI: 0.331
+Modularity: 0.816
+Conductance: 0.032
+NMI: 0.566
+ARI: 0.321
 
 Spectral Clustering:
 Modularity: 0.018
+Conductance: 0.000
 NMI: 0.031
 ARI: 0.000
 Computing layout for 2708 nodes...
@@ -45,12 +48,14 @@ Evaluating topology metrics...
 Results:
 
 Louvain Method:
-Modularity: 0.773
-NMI: 0.339
-ARI: 0.063
+Modularity: 0.769
+Conductance: 0.140
+NMI: 0.360
+ARI: 0.073
 
 Spectral Clustering:
 Modularity: 0.433
+Conductance: 0.025
 NMI: 0.225
 ARI: 0.141
 Computing layout for 19717 nodes...
@@ -74,13 +79,15 @@ Evaluating topology metrics...
 Results:
 
 Louvain Method:
-Modularity: 0.890
-NMI: 0.468
-ARI: 0.049
+Modularity: 0.891
+Conductance: 0.004
+NMI: 0.467
+ARI: 0.058
 
 Spectral Clustering:
 Modularity: 0.115
+Conductance: 0.000
 NMI: 0.078
 ARI: 0.002
 Computing layout for 3327 nodes...
-Computing layout for 3327 nodes...
+Computing layout for 3327 nodes..
